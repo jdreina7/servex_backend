@@ -49,9 +49,41 @@ app.get('/', function (req, res) {
         })
 })
 
-// ================================
-// VERIFICAR EL TOKEN
-// ================================
+// ===============================================
+// Obtener un cliente
+// ===============================================
+app.get('/:id', auth.verifyToken, (req, res) => {
+
+    var id = req.params.id;
+
+    console.log('Este es el Id que llega para filtrar el cliente: '+id);
+
+    Client.findById(id)
+        .where()
+        .exec((err, cliente) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar el cliente',
+                    errors: err
+                });
+            }
+
+            if (!cliente) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El cliente con el id ' + id + ' no existe.',
+                    errors: { message: 'No existe un cliente con ese ID' }
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                cliente: cliente
+
+            });
+        });
+});
 
 
 

@@ -26,8 +26,8 @@ app.get('/all/:search', (req, res) => {
             res.json({
                 ok: true,
                 users: respuestas[0],
-                inputs: respuestas[1],
-                applys: respuestas[2]
+                clients: respuestas[1],
+                products: respuestas[2]
             });
         });
 
@@ -49,11 +49,13 @@ app.get('/all/:search', (req, res) => {
 
     function searchClient(busqueda, regex) {
         return new Promise( ( resolve, reject ) => {
-            Client.find({ client_name: regex }, (err, client) => {
+            Client.find()
+                .or([{ client_name: regex }, { client_bussiness_name: regex }])
+                .exec((err, clients) => {
                 if ( err ) {
                     reject('Error al ejecutar la búsqueda de clientes', err);
                 } else {
-                    resolve( client );
+                    resolve( clients );
                 }
             })
         })
@@ -63,11 +65,11 @@ app.get('/all/:search', (req, res) => {
         return new Promise( ( resolve, reject ) => {
             Product.find({ product_name: regex })
             .populate('product_created_by')
-            .exec((err, product) => {
+            .exec((err, products) => {
                 if ( err ) {
                     reject('Error al ejecutar la búsqueda de los productos', err);
                 } else {
-                    resolve( product );
+                    resolve( products );
                     // console.log('entro al product y devolvio: ' + product );
                 }
             })
