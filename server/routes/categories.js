@@ -76,6 +76,41 @@ app.post('/category', auth.verifyToken, function (req, res) {
 
 })
 
+// ===============================================
+// Obtener una Categoria
+// ===============================================
+app.get('/:id', auth.verifyToken, (req, res) => {
+
+    var id = req.params.id;
+
+    console.log('Este es el Id que llega para filtrar la categoria: '+id);
+
+    Category.findById(id)
+        .where()
+        .exec((err, categoria) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar la categoria',
+                    errors: err
+                });
+            }
+
+            if (!categoria) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'La categoria con el id ' + id + ' no existe.',
+                    errors: { message: 'No existe una categoria con ese ID' }
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                categoria: categoria
+
+            });
+        });
+});
 
 // ================================
 // ACTUALIZAR UNA CATEGORIA

@@ -3,6 +3,7 @@ const express = require('express')
 
 const User = require('../models/user_model')
 const Client = require('../models/client_model')
+const Category = require('../models/category_model')
 const Product = require('../models/product_model')
 
 const app = express()
@@ -19,7 +20,9 @@ app.get('/all/:search', (req, res) => {
         [
             searchUsers( busqueda, regex ),
             searchClient( busqueda, regex ),
+            searchCategory( busqueda, regex ),
             searchProduct( busqueda, regex )
+
         ])
         .then( respuestas => {
             // console.log(respuestas);
@@ -27,7 +30,8 @@ app.get('/all/:search', (req, res) => {
                 ok: true,
                 users: respuestas[0],
                 clients: respuestas[1],
-                products: respuestas[2]
+                categories: respuestas[2],
+                products: respuestas[3]
             });
         });
 
@@ -56,6 +60,19 @@ app.get('/all/:search', (req, res) => {
                     reject('Error al ejecutar la búsqueda de clientes', err);
                 } else {
                     resolve( clients );
+                }
+            })
+        })
+    }
+
+    function searchCategory(busqueda, regex) {
+        return new Promise( ( resolve, reject ) => {
+            Category.find({ cat_name: regex })
+                .exec((err, categories) => {
+                if ( err ) {
+                    reject('Error al ejecutar la búsqueda de categorias', err);
+                } else {
+                    resolve( categories );
                 }
             })
         })
