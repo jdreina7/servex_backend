@@ -20,6 +20,10 @@ app.get('/', function (req, res) {
     // El finde recibe 2 argumentos, el primero es la condicion de busqueda, y el segundo, es los campos exactos que necesitamos devolver
     // Pero no es obligatorio, si deseamos realizar una busqueda general lo podemos dejar asi .find({})
     Product.find({ prod_state: true })
+        .populate('prod_client')
+        .populate('prod_category')
+        .populate('prod_subcategory')
+        .populate('prod_created_by')
         .skip(from)
         .limit(to)
         .exec( (err, products) => {

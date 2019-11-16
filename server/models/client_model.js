@@ -5,12 +5,10 @@ let Schema = mongoose.Schema;
 
 let clientSchema = new Schema({
     client_name: {
-        type: String,
-        required: [true, 'El nombre es Obligatorio']
+        type: String
     },
     client_last_name: {
-        type: String,
-        required: [true, 'El Apellido es Obligatorio']
+        type: String
     },
     client_bussiness_name: {
         type: String,
@@ -22,8 +20,6 @@ let clientSchema = new Schema({
     },
     client_email: {
         type: String,
-        unique: true,
-        required: [true, 'El correo es Obligatorio']
     },
     client_logo: {
         type: String

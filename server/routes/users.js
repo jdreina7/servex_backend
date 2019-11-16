@@ -89,7 +89,7 @@ app.get('/:id', auth.verifyToken, (req, res) => {
 // ================================
 // CREAR UN USUARIO
 // ================================
-app.post('/user', auth.verifyToken, function (req, res) {
+app.post('/user',  function (req, res) {
     let body = req.body;
     
     let myUser = new User({

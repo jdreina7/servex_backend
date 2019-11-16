@@ -17,7 +17,8 @@ let subcategoriesShema = new Schema({
         type: String
     },
     subcat_category: { 
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
         index: true
     },
     subcat_created_by: { 
@@ -29,6 +30,7 @@ let subcategoriesShema = new Schema({
         default: true
     }
 });
+
 
 subcategoriesShema.index({subcat_name: 1, subcat_category: -1}, { unique: true });
 // subcategoriesShema.plugin(uniqueValidator, { message: '{PATH} debe de ser único, ya existe una categoria con nombre {VALUE} en la BD' });

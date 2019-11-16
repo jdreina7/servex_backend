@@ -18,18 +18,21 @@ let productSchema = new Schema({
         type: String
     },
     prod_client: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Client',
         index: true,
         required: [true, 'El cliente es obligatorio']
     },
     prod_category: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
         index: true,
         required: [true, 'La categoria es obligatoria']
     },
     prod_subcategory: {
-        type: String,
-        index: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Subcategory',
+        index: true
     },
     prod_created_by: { 
         type: Schema.Types.ObjectId,

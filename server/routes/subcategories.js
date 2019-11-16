@@ -20,6 +20,8 @@ app.get('/', function (req, res) {
     // El finde recibe 2 argumentos, el primero es la condicion de busqueda, y el segundo, es los campos exactos que necesitamos devolver
     // Pero no es obligatorio, si deseamos realizar una busqueda general lo podemos dejar asi .find({})
     Subcategory.find({ subcat_state: true })
+        .populate('subcat_category', 'cat_name')
+        .populate('subcat_created_by')
         .skip(from)
         .limit(to)
         .exec( (err, subcategories) => {
@@ -75,6 +77,41 @@ app.post('/subcategory', auth.verifyToken, function (req, res) {
 
 })
 
+// ===============================================
+// Obtener una Subcategoria
+// ===============================================
+app.get('/:id', auth.verifyToken, (req, res) => {
+
+    var id = req.params.id;
+
+    console.log('Este es el Id que llega para filtrar la subcategoria: '+id);
+
+    Subcategory.findById(id)
+        .where()
+        .exec((err, subcategoria) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar la subcategoria',
+                    errors: err
+                });
+            }
+
+            if (!subcategoria) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'La subcategoria con el id ' + id + ' no existe.',
+                    errors: { message: 'No existe una subcategoria con ese ID' }
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                subcategoria: subcategoria
+
+            });
+        });
+});
 
 // ================================
 // ACTUALIZAR UNA CATEGORIA
@@ -158,6 +195,39 @@ app.delete('/subcategory/:id', auth.verifyToken, function (req, res) {
     //     });
     // })
 
+})
+
+
+// ================================
+// OBTENER TODAS LAS SUBCATEGORIAS DE UNA CATEGORIA
+// ================================
+app.get('/allsubcategories/:id', function (req, res) {
+
+    var id = req.params.id;
+    
+    // El finde recibe 2 argumentos, el primero es la condicion de busqueda, y el segundo, es los campos exactos que necesitamos devolver
+    // Pero no es obligatorio, si deseamos realizar una busqueda general lo podemos dejar asi .find({})
+    // User.find({ usr_state: true }, 'usr_role usr_name usr_last_name usr_email usr_img usr_country usr_city usr_gender usr_joined usr_birthday usr_last_activity usr_state')
+    Subcategory.find({ subcat_category: id }, 'subcat_name')
+        .exec( (err, subcategories) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            // El count recibve 2 argumentos, el primero DEB SER LA MISMA CONDICION DEL FIND, el segundo es el callback
+            // User.countDocuments({ usr_state: true }, (err, conteo) => {
+            Subcategory.countDocuments( (err, conteo) => {
+                res.json({
+                    ok: true,
+                    subcategories,
+                    total: conteo
+                });
+            })
+
+        })
 })
 
 module.exports = app;

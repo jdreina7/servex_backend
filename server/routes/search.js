@@ -4,6 +4,7 @@ const express = require('express')
 const User = require('../models/user_model')
 const Client = require('../models/client_model')
 const Category = require('../models/category_model')
+const Subcategory = require('../models/subcategory_model')
 const Product = require('../models/product_model')
 
 const app = express()
@@ -21,6 +22,7 @@ app.get('/all/:search', (req, res) => {
             searchUsers( busqueda, regex ),
             searchClient( busqueda, regex ),
             searchCategory( busqueda, regex ),
+            searchSubcategory( busqueda, regex ),
             searchProduct( busqueda, regex )
 
         ])
@@ -31,7 +33,8 @@ app.get('/all/:search', (req, res) => {
                 users: respuestas[0],
                 clients: respuestas[1],
                 categories: respuestas[2],
-                products: respuestas[3]
+                subcategories: respuestas[3],
+                products: respuestas[4]
             });
         });
 
@@ -73,6 +76,19 @@ app.get('/all/:search', (req, res) => {
                     reject('Error al ejecutar la búsqueda de categorias', err);
                 } else {
                     resolve( categories );
+                }
+            })
+        })
+    }
+
+    function searchSubcategory(busqueda, regex) {
+        return new Promise( ( resolve, reject ) => {
+            Subcategory.find({ subcat_name: regex })
+                .exec((err, subcategories) => {
+                if ( err ) {
+                    reject('Error al ejecutar la búsqueda de subcategorias', err);
+                } else {
+                    resolve( subcategories );
                 }
             })
         })
