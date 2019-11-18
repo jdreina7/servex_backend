@@ -70,7 +70,7 @@ app.post('/catcli', auth.verifyToken, function (req, res) {
 // ===============================================
 // Obtener por la categoria
 // ===============================================
-app.get('/category/:id', auth.verifyToken, (req, res) => {
+app.get('/category/:id',  (req, res) => {
 
     var id = req.params.id;
 
@@ -120,7 +120,7 @@ app.get('/category/:id', auth.verifyToken, (req, res) => {
 // ===============================================
 // Obtener por el cliente
 // ===============================================
-app.get('/client/:id', auth.verifyToken, (req, res) => {
+app.get('/client/:id', (req, res) => {
 
     var id = req.params.id;
 
@@ -171,7 +171,7 @@ app.get('/client/:id', auth.verifyToken, (req, res) => {
 // ===============================================
 // Obtener por el cliente para SUBCATEGORIAS
 // ===============================================
-app.get('/clientsubcatgories/:id', auth.verifyToken, (req, res) => {
+app.get('/clientsubcatgories/:id', (req, res) => {
 
     var id = req.params.id;
 

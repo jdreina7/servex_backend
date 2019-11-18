@@ -80,7 +80,7 @@ app.post('/catclisub', auth.verifyToken, function (req, res) {
 // ===============================================
 // Obtener por la categoria
 // ===============================================
-app.get('/category/:id', auth.verifyToken, (req, res) => {
+app.get('/category/:id', (req, res) => {
 
     var id = req.params.id;
 
@@ -131,7 +131,7 @@ app.get('/category/:id', auth.verifyToken, (req, res) => {
 // ===============================================
 // Obtener por el cliente
 // ===============================================
-app.get('/client/:id', auth.verifyToken, (req, res) => {
+app.get('/client/:id', (req, res) => {
 
     var id = req.params.id;
 
@@ -183,7 +183,7 @@ app.get('/client/:id', auth.verifyToken, (req, res) => {
 // ===============================================
 // Obtener por la subcategory
 // ===============================================
-app.get('/subcategory/:id', auth.verifyToken, (req, res) => {
+app.get('/subcategory/:id', (req, res) => {
 
     var id = req.params.id;
 
@@ -235,7 +235,7 @@ app.get('/subcategory/:id', auth.verifyToken, (req, res) => {
 // ===============================================
 // Obtener por el cliente y la categoria
 // ===============================================
-app.get('/client/:id/category/:id2', auth.verifyToken, (req, res) => {
+app.get('/client/:id/category/:id2', (req, res) => {
 
     var idClient = req.params.id;
     var idCategory = req.params.id2;

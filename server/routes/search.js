@@ -84,6 +84,8 @@ app.get('/all/:search', (req, res) => {
     function searchSubcategory(busqueda, regex) {
         return new Promise( ( resolve, reject ) => {
             Subcategory.find({ subcat_name: regex })
+                .populate('subcat_category') 
+                .populate('subcat_client')
                 .exec((err, subcategories) => {
                 if ( err ) {
                     reject('Error al ejecutar la búsqueda de subcategorias', err);
@@ -96,16 +98,18 @@ app.get('/all/:search', (req, res) => {
 
     function searchProduct(busqueda, regex) {
         return new Promise( ( resolve, reject ) => {
-            Product.find({ product_name: regex })
-            .populate('product_created_by')
-            .exec((err, products) => {
-                if ( err ) {
-                    reject('Error al ejecutar la búsqueda de los productos', err);
-                } else {
-                    resolve( products );
-                    // console.log('entro al product y devolvio: ' + product );
-                }
-            })
+            Product.find({ prod_name: regex })
+                .populate('prod_category')
+                .populate('prod_client')
+                .populate('prod_subcategory')
+                .exec((err, products) => {
+                    if ( err ) {
+                        reject('Error al ejecutar la búsqueda de los productos', err);
+                    } else {
+                        resolve( products );
+                        // console.log('entro al product y devolvio: ' + product );
+                    }
+                })
             
         })
     }

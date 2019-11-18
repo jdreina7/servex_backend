@@ -1,4 +1,5 @@
 require('./config/config');
+var path = require('path');
 var cors = require('cors');
 const express = require('express')
 const mongoose = require('mongoose')
@@ -17,9 +18,13 @@ app.use( function( req, res, next ) {
 app.use(cors());
 
 
-
+__dirname = path.resolve(path.dirname(''));
+console.log('Primer dirname: ' + __dirname);
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+// app.use(express.static(path.join(__dirname, '/files/products')));
+app.use(express.static(__dirname + '/server/files/products'));
+console.log('Segundo dirname: ' + __dirname);
 
 // Importar rutas
 var appRoutes = require('./routes/app');
@@ -34,6 +39,7 @@ var appProducts = require('./routes/products');
 var appSearch = require('./routes/search');
 var appUploads = require('./routes/upload');
 var appFiles = require('./routes/files');
+var appFile = require('./routes/file');
 var appimages = require('./routes/images');
 
 // Routes
@@ -48,7 +54,9 @@ app.use( '/products', appProducts );
 app.use( '/search', appSearch );
 app.use( '/uploads', appUploads );
 app.use( '/files', appFiles );
+app.use( '/file', appFile );
 app.use( '/images', appimages );
+
 
 app.use('/', appRoutes );
 

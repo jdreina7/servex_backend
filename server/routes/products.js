@@ -11,6 +11,7 @@ const app = express()
 // ================================
 app.get('/', function (req, res) {
 
+    let flag = req.query.desde;
     let from = req.query.desde || 0;
     let to = req.query.hasta || 5;
     
@@ -19,7 +20,8 @@ app.get('/', function (req, res) {
     
     // El finde recibe 2 argumentos, el primero es la condicion de busqueda, y el segundo, es los campos exactos que necesitamos devolver
     // Pero no es obligatorio, si deseamos realizar una busqueda general lo podemos dejar asi .find({})
-    Product.find({ prod_state: true })
+    if (flag) {
+        Product.find({ prod_state: true })
         .populate('prod_client')
         .populate('prod_category')
         .populate('prod_subcategory')
@@ -44,6 +46,34 @@ app.get('/', function (req, res) {
             })
 
         })
+
+    } else {
+        Product.find({ prod_state: true })
+        .populate('prod_client')
+        .populate('prod_category')
+        .populate('prod_subcategory')
+        .populate('prod_created_by')
+        .exec( (err, products) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            // El count recibve 2 argumentos, el primero DEB SER LA MISMA CONDICION DEL FIND, el segundo es el callback
+            Product.countDocuments({ prod_state: true }, (err, conteo) => {
+                res.json({
+                    ok: true,
+                    products,
+                    total: conteo
+                });
+            })
+
+        })
+
+    }
+    
 })
 
 // ================================
@@ -206,5 +236,82 @@ app.delete('/product/:id', auth.verifyToken, function (req, res) {
     })
 
 })
+
+// ===============================================
+// Obtener por el cliente y la categoria
+// ===============================================
+app.get('/client/:id/category/:id2', (req, res) => {
+
+    var idClient = req.params.id;
+    var idCategory = req.params.id2;
+
+    Product.find({prod_client: idClient, prod_category: idCategory, prod_subcategory: {"$eq": null}})
+        .populate('prod_category')
+        .populate('prod_client')
+        .populate('prod_subcategory')
+        .exec((err, productos1) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar los productos',
+                    errors: err
+                });
+            }
+
+            if (!productos1) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'No se encontraron resultados por ese criterio de busqueda',
+                    errors: { message: 'No existen productos con esos clientes ni categorias con esos ids' }
+                });
+            }
+
+            res.json({
+                ok: true,
+                products: productos1
+            });
+            
+        });
+});
+
+
+// ===============================================
+// Obtener por el cliente y la categoria
+// ===============================================
+app.get('/client/:id/category/:id2/subcategory/:id3', (req, res) => {
+
+    var idClient = req.params.id;
+    var idCategory = req.params.id2;
+    var idSubcategory = req.params.id3;
+
+    Product.find({prod_client: idClient, prod_category: idCategory, prod_subcategory: idSubcategory})
+        .populate('prod_category')
+        .populate('prod_client')
+        .populate('prod_subcategory')
+        .exec((err, productos2) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar los productos',
+                    errors: err
+                });
+            }
+
+            if (!productos2) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'No se encontraron resultados por ese criterio de busqueda',
+                    errors: { message: 'No existen productos con esos clientes ni categorias con esos ids' }
+                });
+            }
+
+            res.json({
+                ok: true,
+                products: productos2
+            });
+            
+        });
+});
+
 
 module.exports = app;
