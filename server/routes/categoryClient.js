@@ -10,20 +10,12 @@ const app = express()
 // OBTENER TODOS LAS CATEGORIAS
 // ================================
 app.get('/', function (req, res) {
-
-    let from = req.query.desde || 0;
-    let to = req.query.hasta || 5;
-    
-    from = Number(from);
-    to = Number(to);
     
     // El finde recibe 2 argumentos, el primero es la condicion de busqueda, y el segundo, es los campos exactos que necesitamos devolver
     // Pero no es obligatorio, si deseamos realizar una busqueda general lo podemos dejar asi .find({})
     CatCli.find({ catcli_state: true })
-        .populate('catcli_category', 'cat_name')
+        .populate('catcli_category')
         .populate('catcli_client', 'client_bussiness_name')
-        .skip(from)
-        .limit(to)
         .exec( (err, catcli) => {
             if (err) {
                 return res.status(400).json({
@@ -85,7 +77,7 @@ app.get('/category/:id', auth.verifyToken, (req, res) => {
     console.log('Este es el Id que llega para filtrar la catcli: '+id);
 
     CatCli.find({ catcli_category: id })
-        .populate('catcli_category', 'cat_name')
+        .populate('catcli_category')
         .populate('catcli_client', 'client_bussiness_name')
         .where()
         .exec((err, catcli) => {
@@ -135,7 +127,7 @@ app.get('/client/:id', auth.verifyToken, (req, res) => {
     console.log('Este es el Id que llega para filtrar la catcli: '+id);
 
     CatCli.find({ catcli_client: id })
-        .populate('catcli_category', 'cat_name')
+        .populate('catcli_category')
         .populate('catcli_client', 'client_bussiness_name')
         .where()
         .exec((err, catcli2) => {
@@ -176,6 +168,60 @@ app.get('/client/:id', auth.verifyToken, (req, res) => {
 });
 
 
+// ===============================================
+// Obtener por el cliente para SUBCATEGORIAS
+// ===============================================
+app.get('/clientsubcatgories/:id', auth.verifyToken, (req, res) => {
+
+    var id = req.params.id;
+
+    console.log('Este es el Id que llega para filtrar la catcli: '+id);
+
+    CatCli.find({ catcli_client: id })
+        .populate('catcli_client', 'client_bussiness_name')
+        .populate({
+            path: 'catcli_category',
+            match: { 'cat_support_subcategories': true }
+          })
+        .exec((err, catcli2) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar el cliente de catcli',
+                    errors: err
+                });
+            }
+
+            if (!catcli2) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El cliente con el id ' + id + ' no existe en la relacion catcli.',
+                    errors: { message: 'No existe un client con ese ID en catcli' }
+                });
+            }
+
+            CatCli.countDocuments({ catcli_client: id }, (err, conteo) => {
+                if (conteo > 0) {
+                    res.json({
+                        ok: true,
+                        catcli: catcli2,
+                        total: conteo
+                    });
+                } else {
+                    return res.status(400).json({
+                        ok: false,
+                        mensaje: 'El cliente con el id ' + id + ' no existe en la relacion catcli.',
+                        errors: { message: 'No existe un client con ese ID en catcli' }
+                    });
+                }
+                
+            })
+            
+        });
+});
+
+
+
 // ================================
 // ACTUALIZAR UNA CATEGORIA
 // ================================
@@ -189,6 +235,14 @@ app.put('/catcli/:id', auth.verifyToken, function (req, res) {
             return res.status(400).json({
                 ok: false,
                 err
+            });
+        }
+
+        if (!nawcatcliDB) {
+            return res.status(400).json({
+                ok: false,
+                mensaje: 'No existe esta relacion en la DB.',
+                errors: { message: 'No existen registros con ese ID en catcli' }
             });
         }
 

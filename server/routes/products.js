@@ -53,15 +53,15 @@ app.post('/product', auth.verifyToken, function (req, res) {
     let body = req.body;
     
     let myProduct = new Product({
-        prod_name: body.name,
-        prod_description: body.description,
-        prod_img: body.img,
-        prod_file: body.file,
-        prod_client: body.client,
-        prod_category: body.category,
-        prod_subcategory: body.subcategory,
-        prod_created_by: body.created_by,
-        prod_state: body.state,
+        prod_name: body.prod_name,
+        prod_description: body.prod_description,
+        prod_img: body.prod_img,
+        prod_file: body.prod_file,
+        prod_client: body.prod_client,
+        prod_category: body.prod_category,
+        prod_subcategory: body.prod_subcategory,
+        prod_created_by: body.prod_created_by,
+        prod_state: body.prod_state,
     });
 
     myProduct.save( (err, productDB) => {
@@ -108,6 +108,45 @@ app.put('/product/:id', auth.verifyToken, function (req, res) {
     })
 })
 
+
+// ===============================================
+// Obtener una Product
+// ===============================================
+app.get('/:id', auth.verifyToken, (req, res) => {
+
+    var id = req.params.id;
+
+    // console.log('Este es el Id que llega para filtrar la subcategoria: '+id);
+
+    Product.findById(id)
+        .populate('prod_category')
+        .populate('prod_client')
+        .populate('prod_subcategory')
+        .where()
+        .exec((err, producto) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar el producto',
+                    errors: err
+                });
+            }
+
+            if (!producto) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El producto con el id ' + id + ' no existe.',
+                    errors: { message: 'No existe un producto con ese ID' }
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                producto: producto
+
+            });
+        });
+});
 
 // ================================
 // ELIMINAR/INACTIVAR UN PRODUCTO

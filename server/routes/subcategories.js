@@ -20,7 +20,8 @@ app.get('/', function (req, res) {
     // El finde recibe 2 argumentos, el primero es la condicion de busqueda, y el segundo, es los campos exactos que necesitamos devolver
     // Pero no es obligatorio, si deseamos realizar una busqueda general lo podemos dejar asi .find({})
     Subcategory.find({ subcat_state: true })
-        .populate('subcat_category', 'cat_name')
+        .populate('subcat_category')
+        .populate('subcat_client')
         .populate('subcat_created_by')
         .skip(from)
         .limit(to)
@@ -55,6 +56,7 @@ app.post('/subcategory', auth.verifyToken, function (req, res) {
         subcat_description: body.subcat_description,
         subcat_img: body.subcat_featured_img,
         subcat_category: body.subcat_category,
+        subcat_client: body.subcat_client,
         subcat_created_by: body.subcat_created_by,
     });
 
@@ -87,6 +89,8 @@ app.get('/:id', auth.verifyToken, (req, res) => {
     console.log('Este es el Id que llega para filtrar la subcategoria: '+id);
 
     Subcategory.findById(id)
+        .populate('subcat_category')
+        .populate('subcat_client')
         .where()
         .exec((err, subcategoria) => {
             if (err) {
@@ -119,7 +123,7 @@ app.get('/:id', auth.verifyToken, (req, res) => {
 app.put('/subcategory/:id', auth.verifyToken, function (req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, 
-        ['subcat_name', 'subcat_description', 'subcat_img', 'subcat_category', 'subcat_created_by'] );
+        ['subcat_name', 'subcat_description', 'subcat_img', 'subcat_category', 'subcat_client', 'subcat_created_by'] );
 
 	Subcategory.findByIdAndUpdate( id, body, {new: true}, (err, subcategoryDB2) => {
         if (err) {

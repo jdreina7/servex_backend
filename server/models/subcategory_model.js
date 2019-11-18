@@ -21,6 +21,11 @@ let subcategoriesShema = new Schema({
         ref: 'Category',
         index: true
     },
+    subcat_client: { 
+        type: Schema.Types.ObjectId,
+        ref: 'Client',
+        index: true
+    },
     subcat_created_by: { 
         type: Schema.Types.ObjectId,
         ref: 'User' 
@@ -32,6 +37,6 @@ let subcategoriesShema = new Schema({
 });
 
 
-subcategoriesShema.index({subcat_name: 1, subcat_category: -1}, { unique: true });
+subcategoriesShema.index({subcat_name: 1, subcat_category: -1, subcat_client: -1}, { unique: true });
 // subcategoriesShema.plugin(uniqueValidator, { message: '{PATH} debe de ser único, ya existe una categoria con nombre {VALUE} en la BD' });
 module.exports = mongoose.model('Subcategory', subcategoriesShema)
