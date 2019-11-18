@@ -19,12 +19,12 @@ app.use(cors());
 
 
 __dirname = path.resolve(path.dirname(''));
-console.log('Primer dirname: ' + __dirname);
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-// app.use(express.static(path.join(__dirname, '/files/products')));
+
 app.use(express.static(__dirname + '/server/files/products'));
-console.log('Segundo dirname: ' + __dirname);
+
 
 // Importar rutas
 var appRoutes = require('./routes/app');
@@ -61,7 +61,7 @@ app.use( '/images', appimages );
 app.use('/', appRoutes );
 
 
-mongoose.connect(ENV_DB,{ useNewUrlParser: true, useCreateIndex: true }, (err, res) => {
+mongoose.connect(ENV_DB,{ useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, (err, res) => {
 
 	if (err) throw err;
 
