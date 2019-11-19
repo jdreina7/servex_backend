@@ -56,7 +56,8 @@ app.put('/:tipo/:id', (req, res) => {
     var nombre_archivo = `${ tipo }-${ id }-${ new Date().getMilliseconds() }.${ extension }`;
 
     // Mover a un path temporal
-    var path = `./server/uploads/${ tipo }/${ nombre_archivo }`;
+    // var path = `./server/uploads/${ tipo }/${ nombre_archivo }`;
+    var path = `./uploads/${ tipo }/${ nombre_archivo }`;
 
     archivo.mv( path, err => { 
         if ( err ) {
