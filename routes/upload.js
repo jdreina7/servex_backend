@@ -179,7 +179,7 @@ app.put('/:tipo/:id', (req, res) => {
                 console.log(client.client_logo);
 
                 // var pathViejo = './server./uploads/clients/' + client.client_logo;
-                var pathViejo = '../uploads/clients/' + client.client_logo;
+                var pathViejo = '/uploads/clients/' + client.client_logo;
 
                 // console.log('el path viejo es: ' + pathViejo+'espaciopegado');
 
