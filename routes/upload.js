@@ -63,7 +63,7 @@ app.put('/:tipo/:id', (req, res) => {
     console.log('EL dirname Juan: ' + __dirname);
     console.log('EL path Juan: ' + path);
 
-    archivo.mv( '/tmp', err => { 
+    archivo.mv( '/tmp/archivo.jpg', err => { 
         if ( err ) {
             return res.status(500).json({
                 ok: false,
