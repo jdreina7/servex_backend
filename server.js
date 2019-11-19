@@ -25,6 +25,7 @@ app.use(bodyParser.json())
 
 // app.use(express.static(__dirname + '/server/files/products')); local
 app.use(express.static(__dirname + '/files/products'));
+app.use(express.static(__dirname + '/uploads'));
 
 
 // Importar rutas
