@@ -1,4 +1,4 @@
-require('/config/config');
+require(__dirname + '/config/config');
 var path = require('path');
 var cors = require('cors');
 const express = require('express')
@@ -28,10 +28,10 @@ app.use(express.static(__dirname + '/files/products'));
 
 
 // Importar rutas
-var appRoutes = require('/routes/app');
-var appLogin = require('/routes/login');
-var appUsers = require('/routes/users');
-var appClients = require('/routes/clients');
+var appRoutes = require(__dirname + '/routes/app');
+var appLogin = require(__dirname + '/routes/login');
+var appUsers = require(__dirname + '/routes/users');
+var appClients = require(__dirname + '/routes/clients');
 var appCategories = require('/routes/categories');
 var appCatCli = require('/routes/categoryClient');
 var appCatCliSub = require('/routes/categoryClientSubcategory');
