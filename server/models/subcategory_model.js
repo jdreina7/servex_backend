@@ -10,8 +10,7 @@ let subcategoriesShema = new Schema({
         required: [true, 'El nombre es Obligatorio']
     },
     subcat_description: {
-        type: String,
-        required: [true, 'Por favor introduzca una descripción de la categoría']
+        type: String
     },
     subcat_img: {
         type: String

@@ -11,8 +11,7 @@ let categoriesShema = new Schema({
         required: [true, 'El nombre es Obligatorio']
     },
     cat_description: {
-        type: String,
-        required: [true, 'Por favor introduzca una descripción de la categoría']
+        type: String
     },
     cat_img: {
         type: String
