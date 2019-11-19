@@ -58,7 +58,7 @@ app.put('/:tipo/:id', (req, res) => {
 
     // Mover a un path temporal
     // var path = `./server/server/server/uploads/${ tipo }/${ nombre_archivo }`;
-    var path = __dirname + `/../uploads/${ tipo }/${ nombre_archivo }`;
+    var path = `/app/uploads/${ tipo }/${ nombre_archivo }`;
 
     console.log('EL dirname Juan: ' + __dirname);
     console.log('EL path Juan: ' + path);
