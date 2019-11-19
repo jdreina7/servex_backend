@@ -60,7 +60,7 @@ app.use( '/images', appimages );
 
 app.use('/', appRoutes );
 
-mongoose.connection.openUri(ENV_DB, (err) => {
+mongoose.connection.openUri(ENV_DB, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, (err, res) => {
 
 // mongoose.connect(ENV_DB,{ useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, (err, res) => {
 
@@ -69,6 +69,6 @@ mongoose.connection.openUri(ENV_DB, (err) => {
 	console.log("DB Online!");
 });
 
-app.listen(ENV_PORT, () => {
+app.listen(PORT, () => {
 	console.log(`Server runing in ${ENV_PORT} port`);
 });
