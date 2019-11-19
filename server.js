@@ -1,4 +1,4 @@
-require('./config/config');
+require('/config/config');
 var path = require('path');
 var cors = require('cors');
 const express = require('express')
@@ -28,20 +28,20 @@ app.use(express.static(__dirname + '/files/products'));
 
 
 // Importar rutas
-var appRoutes = require('./routes/app');
-var appLogin = require('./routes/login');
-var appUsers = require('./routes/users');
-var appClients = require('./routes/clients');
-var appCategories = require('./routes/categories');
-var appCatCli = require('./routes/categoryClient');
-var appCatCliSub = require('./routes/categoryClientSubcategory');
-var appSubcategories = require('./routes/subcategories');
-var appProducts = require('./routes/products');
-var appSearch = require('./routes/search');
-var appUploads = require('./routes/upload');
-var appFiles = require('./routes/files');
-var appFile = require('./routes/file');
-var appimages = require('./routes/images');
+var appRoutes = require('/routes/app');
+var appLogin = require('/routes/login');
+var appUsers = require('/routes/users');
+var appClients = require('/routes/clients');
+var appCategories = require('/routes/categories');
+var appCatCli = require('/routes/categoryClient');
+var appCatCliSub = require('/routes/categoryClientSubcategory');
+var appSubcategories = require('/routes/subcategories');
+var appProducts = require('/routes/products');
+var appSearch = require('/routes/search');
+var appUploads = require('/routes/upload');
+var appFiles = require('/routes/files');
+var appFile = require('/routes/file');
+var appimages = require('/routes/images');
 
 // Routes
 app.use( '/login', appLogin );
