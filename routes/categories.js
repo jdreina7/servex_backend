@@ -70,7 +70,7 @@ app.get('/', function (req, res) {
 // ================================
 // CREAR UNA CATEGORIA
 // ================================
-app.post('/category', auth.verifyToken, function (req, res) {
+app.post('/category', function (req, res) {
     let body = req.body;
     
     let myCategory = new Category({
@@ -104,7 +104,7 @@ app.post('/category', auth.verifyToken, function (req, res) {
 // ===============================================
 // Obtener una Categoria
 // ===============================================
-app.get('/:id', auth.verifyToken, (req, res) => {
+app.get('/:id', (req, res) => {
 
     var id = req.params.id;
 
@@ -140,7 +140,7 @@ app.get('/:id', auth.verifyToken, (req, res) => {
 // ================================
 // ACTUALIZAR UNA CATEGORIA
 // ================================
-app.put('/category/:id', auth.verifyToken, function (req, res) {
+app.put('/category/:id', function (req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, 
         ['cat_name', 'cat_description', 'cat_img', 'cat_support_subcategories', 'cat_created_by'] );
@@ -165,7 +165,7 @@ app.put('/category/:id', auth.verifyToken, function (req, res) {
 // ================================
 // ELIMINAR/INACTIVAR UNA CATEGORIA
 // ================================
-app.delete('/category/:id', auth.verifyToken, function (req, res) {
+app.delete('/category/:id', function (req, res) {
     let id = req.params.id;
     
     // Borrado fisico
@@ -224,7 +224,7 @@ app.delete('/category/:id', auth.verifyToken, function (req, res) {
 // ================================
 // OBTENER TODOS LAS CATEGORIAS HABILITADAS PARA SUBCATEGORIAS
 // ================================
-app.get('/subcategory/enabledSubcategories', auth.verifyToken, function (req, res) {
+app.get('/subcategory/enabledSubcategories', function (req, res) {
 
     // El finde recibe 2 argumentos, el primero es la condicion de busqueda, y el segundo, es los campos exactos que necesitamos devolver
     // Pero no es obligatorio, si deseamos realizar una busqueda general lo podemos dejar asi .find({})

@@ -48,7 +48,7 @@ app.get('/', function (req, res) {
 // ================================
 // CREAR UNA CATEGORIA
 // ================================
-app.post('/subcategory', auth.verifyToken, function (req, res) {
+app.post('/subcategory', function (req, res) {
     let body = req.body;
     
     let mySubcategory = new Subcategory({
@@ -82,7 +82,7 @@ app.post('/subcategory', auth.verifyToken, function (req, res) {
 // ===============================================
 // Obtener una Subcategoria
 // ===============================================
-app.get('/:id', auth.verifyToken, (req, res) => {
+app.get('/:id', (req, res) => {
 
     var id = req.params.id;
 
@@ -120,7 +120,7 @@ app.get('/:id', auth.verifyToken, (req, res) => {
 // ================================
 // ACTUALIZAR UNA CATEGORIA
 // ================================
-app.put('/subcategory/:id', auth.verifyToken, function (req, res) {
+app.put('/subcategory/:id', function (req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, 
         ['subcat_name', 'subcat_description', 'subcat_img', 'subcat_category', 'subcat_client', 'subcat_created_by'] );
@@ -145,7 +145,7 @@ app.put('/subcategory/:id', auth.verifyToken, function (req, res) {
 // ================================
 // ELIMINAR/INACTIVAR UNA CATEGORIA
 // ================================
-app.delete('/subcategory/:id', auth.verifyToken, function (req, res) {
+app.delete('/subcategory/:id', function (req, res) {
     let id = req.params.id;
     
     // Borrado fisico

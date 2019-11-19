@@ -76,7 +76,7 @@ app.get('/', function (req, res) {
 // ===============================================
 // Obtener un cliente
 // ===============================================
-app.get('/:id', auth.verifyToken, (req, res) => {
+app.get('/:id',  (req, res) => {
 
     var id = req.params.id;
 
@@ -149,7 +149,7 @@ app.post('/client', function (req, res) {
 // ================================
 // ACTUALIZAR UN CLIENTE
 // ================================
-app.put('/client/:id', auth.verifyToken, function (req, res) {
+app.put('/client/:id', function (req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, 
         ['client_name', 'client_last_name', 'client_email', 'client_description', 'client_bussiness_name', 'client_logo', 'client_state'] );
@@ -172,7 +172,7 @@ app.put('/client/:id', auth.verifyToken, function (req, res) {
 // ================================
 // ELIMINAR/INACTIVAR UN CLIENTE
 // ================================
-app.delete('/client/:id', auth.verifyToken, function (req, res) {
+app.delete('/client/:id', function (req, res) {
     let id = req.params.id;
     
     // Borrado fisico
@@ -233,7 +233,7 @@ app.delete('/client/:id', auth.verifyToken, function (req, res) {
 // ================================
 // ACTIVAR UN CLIENTE INACTIVADO
 // ================================
-app.put('/activateClient/:id', auth.verifyToken, function (req, res) {
+app.put('/activateClient/:id', function (req, res) {
     let id = req.params.id;
     
     Client.findByIdAndUpdate( id, {client_state: true}, {new: true}, (err, clientActivated) => {

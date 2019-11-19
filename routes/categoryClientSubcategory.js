@@ -48,7 +48,7 @@ app.get('/', function (req, res) {
 // ================================
 // CREAR UNA CATEGORIA
 // ================================
-app.post('/catclisub', auth.verifyToken, function (req, res) {
+app.post('/catclisub', function (req, res) {
     let body = req.body;
     
     let myCatCli = new CatCliSub({
@@ -273,7 +273,7 @@ app.get('/client/:id/category/:id2', (req, res) => {
 // ================================
 // ACTUALIZAR UNA CATEGORIA
 // ================================
-app.put('/catclisub/:id', auth.verifyToken, function (req, res) {
+app.put('/catclisub/:id', function (req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, 
         ['catclisub_category', 'catclisub_client', 'catclisub_subcategory'] );
@@ -306,7 +306,7 @@ app.put('/catclisub/:id', auth.verifyToken, function (req, res) {
 // ================================
 // ELIMINAR/INACTIVAR UNA CATEGORIA
 // ================================
-app.delete('/catclisub/:id', auth.verifyToken, function (req, res) {
+app.delete('/catclisub/:id', function (req, res) {
     let id = req.params.id;
     
     // Borrado fisico

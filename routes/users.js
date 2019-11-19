@@ -52,7 +52,7 @@ app.get('/', function (req, res) {
 // ===============================================
 // Obtener un usuario
 // ===============================================
-app.get('/:id', auth.verifyToken, (req, res) => {
+app.get('/:id', (req, res) => {
 
     var id = req.params.id;
 
@@ -126,7 +126,7 @@ app.post('/user',  function (req, res) {
 // ================================
 // ACTUALIZAR UN USUARIO
 // ================================
-app.put('/user/:id', auth.verifyToken, function (req, res) {
+app.put('/user/:id', function (req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, 
         ['usr_name', 'usr_last_name', 'usr_email', 'usr_birthday', 'usr_img', 'usr_img_top', 'usr_role','usr_state'] );
@@ -150,7 +150,7 @@ app.put('/user/:id', auth.verifyToken, function (req, res) {
 // ================================
 // ACTUALIZAR CONTRASEÑA DE USUARIO
 // ================================
-app.put('/userPass/:id', auth.verifyToken, function (req, res) {
+app.put('/userPass/:id', function (req, res) {
     let id = req.params.id;
     let pass1 = req.body.usr_password1;
     let pass2 = req.body.usr_password2;
@@ -187,7 +187,7 @@ app.put('/userPass/:id', auth.verifyToken, function (req, res) {
 // ================================
 // ELIMINAR/INACTIVAR UN USUARIO
 // ================================
-app.delete('/user/:id', auth.verifyToken, function (req, res) {
+app.delete('/user/:id', function (req, res) {
     let id = req.params.id;
     
     // Borrado fisico
@@ -248,7 +248,7 @@ app.delete('/user/:id', auth.verifyToken, function (req, res) {
 // ================================
 // ACTIVAR UN USUARIO INACTIVADO
 // ================================
-app.put('/activateUser/:id', auth.verifyToken, function (req, res) {
+app.put('/activateUser/:id', function (req, res) {
     let id = req.params.id;
     
     User.findByIdAndUpdate( id, {usr_state: true}, {new: true}, (err, usrActivated) => {

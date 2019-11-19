@@ -79,7 +79,7 @@ app.get('/', function (req, res) {
 // ================================
 // CREAR UN PRODUCTO
 // ================================
-app.post('/product', auth.verifyToken, function (req, res) {
+app.post('/product', function (req, res) {
     let body = req.body;
     
     let myProduct = new Product({
@@ -117,7 +117,7 @@ app.post('/product', auth.verifyToken, function (req, res) {
 // ================================
 // ACTUALIZAR UN PRODUCTO
 // ================================
-app.put('/product/:id', auth.verifyToken, function (req, res) {
+app.put('/product/:id',  function (req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, 
         ['prod_name','prod_description','prod_img','prod_file','prod_client','prod_category','prod_subcategory'] );
@@ -142,7 +142,7 @@ app.put('/product/:id', auth.verifyToken, function (req, res) {
 // ===============================================
 // Obtener una Product
 // ===============================================
-app.get('/:id', auth.verifyToken, (req, res) => {
+app.get('/:id', (req, res) => {
 
     var id = req.params.id;
 
@@ -181,7 +181,7 @@ app.get('/:id', auth.verifyToken, (req, res) => {
 // ================================
 // ELIMINAR/INACTIVAR UN PRODUCTO
 // ================================
-app.delete('/product/:id', auth.verifyToken, function (req, res) {
+app.delete('/product/:id', function (req, res) {
     let id = req.params.id;
     
     // Borrado fisico
