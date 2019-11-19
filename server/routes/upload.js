@@ -6,6 +6,7 @@ var Cliente = require('../models/client_model');
 var Categoria = require('../models/category_model');
 var Subcategoria = require('../models/subcategory_model');
 var Productos = require('../models/product_model');
+var path 	= require('path');
 
 var fs = require('fs');
 const app = express()
@@ -58,6 +59,9 @@ app.put('/:tipo/:id', (req, res) => {
     // Mover a un path temporal
     // var path = `./server/uploads/${ tipo }/${ nombre_archivo }`;
     var path = `./uploads/${ tipo }/${ nombre_archivo }`;
+
+    console.log('EL dirname Juan: ' + __dirname);
+    console.log('EL path Juan: ' + path);
 
     archivo.mv( path, err => { 
         if ( err ) {
