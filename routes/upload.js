@@ -100,7 +100,7 @@ app.put('/:tipo/:id', (req, res) => {
                 console.log(user.usr_img);
 
                 // var pathViejo = './server./uploads/users/' + user.usr_img; =========OJO DESCOMENTAR ESTA LINEA PARA LOCAL
-                var pathViejo = '../uploads/users/' + user.usr_img;
+                var pathViejo = __dirname + '/../uploads/users/' + user.usr_img;
 
                 // console.log('el path viejo es: ' + pathViejo+'espaciopegado');
 
@@ -260,7 +260,7 @@ app.put('/:tipo/:id', (req, res) => {
                 console.log(category.cat_img);
 
                 // var pathViejo = './server./uploads/categories/' + category.cat_img;
-                var pathViejo = './uploads/categories/' + category.cat_img;
+                var pathViejo = __dirname + '/../uploads/categories/' + category.cat_img;
 
                 // console.log('el path viejo es: ' + pathViejo+'espaciopegado');
 
@@ -332,7 +332,7 @@ app.put('/:tipo/:id', (req, res) => {
                 console.log(subcategory.subcat_img);
 
                 // var pathViejo = './server./uploads/subcategories/' + subcategory.subcat_img;
-                var pathViejo = './uploads/subcategories/' + subcategory.subcat_img;
+                var pathViejo = __dirname + '/../uploads/subcategories/' + subcategory.subcat_img;
 
                 // console.log('el path viejo es: ' + pathViejo+'espaciopegado');
 
@@ -404,7 +404,7 @@ app.put('/:tipo/:id', (req, res) => {
                 console.log(product.prod_img);
 
                 // var pathViejo = './server./uploads/products/' + product.prod_img;
-                var pathViejo = './uploads/products/' + product.prod_img;
+                var pathViejo = __dirname + '/../uploads/products/' + product.prod_img;
 
                 // console.log('el path viejo es: ' + pathViejo+'espaciopegado');
 

@@ -53,7 +53,8 @@ app.put('/:tipo/:id', (req, res) => {
     var nombre_archivo = `${ id }-${ new Date().getMilliseconds() }.${ extension }`;
 
     // Mover a un path temporal
-    var path = `./server/files/products/${ nombre_archivo }`;
+    // var path = `./server/files/products/${ nombre_archivo }`;
+    var path = __dirname + `/../files/products/${ nombre_archivo }`;
 
     archivo.mv( path, err => { 
         if ( err ) {
@@ -89,7 +90,7 @@ app.put('/:tipo/:id', (req, res) => {
 
             console.log(product.prod_file);
 
-            var pathViejo = './server/files/products/' + product.prod_file;
+            var pathViejo = __dirname + '/../files/products/' + product.prod_file;
 
             // console.log('el path viejo es: ' + pathViejo+'espaciopegado');
 
