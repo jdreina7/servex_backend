@@ -32,16 +32,16 @@ var appRoutes = require(__dirname + '/routes/app');
 var appLogin = require(__dirname + '/routes/login');
 var appUsers = require(__dirname + '/routes/users');
 var appClients = require(__dirname + '/routes/clients');
-var appCategories = require('/routes/categories');
-var appCatCli = require('/routes/categoryClient');
-var appCatCliSub = require('/routes/categoryClientSubcategory');
-var appSubcategories = require('/routes/subcategories');
-var appProducts = require('/routes/products');
-var appSearch = require('/routes/search');
-var appUploads = require('/routes/upload');
-var appFiles = require('/routes/files');
-var appFile = require('/routes/file');
-var appimages = require('/routes/images');
+var appCategories = require(__dirname + '/routes/categories');
+var appCatCli = require(__dirname + '/routes/categoryClient');
+var appCatCliSub = require(__dirname + '/routes/categoryClientSubcategory');
+var appSubcategories = require(__dirname + '/routes/subcategories');
+var appProducts = require(__dirname + '/routes/products');
+var appSearch = require(__dirname + '/routes/search');
+var appUploads = require(__dirname + '/routes/upload');
+var appFiles = require(__dirname + '/routes/files');
+var appFile = require(__dirname + '/routes/file');
+var appimages = require(__dirname + '/routes/images');
 
 // Routes
 app.use( '/login', appLogin );
