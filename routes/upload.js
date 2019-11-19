@@ -58,12 +58,12 @@ app.put('/:tipo/:id', (req, res) => {
 
     // Mover a un path temporal
     // var path = `./server/server/server/uploads/${ tipo }/${ nombre_archivo }`;
-    var path = `/app/uploads/${ tipo }/${ archivo.name }`;
+    var path = __dirname + `/../uploads/${ tipo }/${ archivo.name }`;
 
     console.log('EL dirname Juan: ' + __dirname);
     console.log('EL path Juan: ' + path);
 
-    archivo.mv( '/app/uploads/clients/archivo.jpg', err => { 
+    archivo.mv( path, err => { 
         if ( err ) {
             return res.status(500).json({
                 ok: false,

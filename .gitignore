@@ -1,1 +1,9 @@
 node_modules/
+/uploads/
+!/uploads/clients/.gitkeep
+!/uploads/users/.gitkeep
+!/uploads/categories/.gitkeep
+!/uploads/subcategories/.gitkeep
+!/uploads/products/.gitkeep
+/files/
+!/files/products/.gitkeep
