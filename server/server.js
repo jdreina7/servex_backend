@@ -15,7 +15,7 @@ const app = express()
 // 	next();
 // });
 
-// app.use(cors());
+app.use(cors());
 
 
 __dirname = path.resolve(path.dirname(''));
