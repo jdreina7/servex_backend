@@ -69,6 +69,6 @@ mongoose.connection.openUri(process.env.ENV_DB, { useNewUrlParser: true, useCrea
 	console.log("DB Online!");
 });
 
-app.listen(PORT, () => {
-	console.log(`Server runing in ${ENV_PORT} port`);
+app.listen(process.env.PORT, () => {
+	console.log(`Server runing in ${process.env.PORT} port`);
 });
