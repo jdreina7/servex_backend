@@ -60,8 +60,9 @@ app.use( '/images', appimages );
 
 app.use('/', appRoutes );
 
+mongoose.connection.openUri(ENV_DB, (err) => {
 
-mongoose.connect(ENV_DB,{ useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, (err, res) => {
+// mongoose.connect(ENV_DB,{ useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, (err, res) => {
 
 	if (err) throw err;
 
